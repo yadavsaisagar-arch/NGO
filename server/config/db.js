@@ -1,4 +1,12 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
+
+// Use Google Public DNS to avoid querySrv EBADRESP on Windows/ISP DNS resolvers
+try {
+  dns.setServers(['8.8.8.8', '8.8.4.4']);
+} catch (e) {
+  console.warn('[Database] Could not override DNS servers:', e.message);
+}
 
 const connectDB = async () => {
   try {
